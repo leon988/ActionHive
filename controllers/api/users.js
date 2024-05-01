@@ -1,8 +1,7 @@
 const jwt = require('jsonwebtoken');
 const User = require('../../models/user');
 const bcrypt = require('bcrypt');
-require ('dotenv').config
-
+require('dotenv').config();
 
 module.exports = {
   create, 
