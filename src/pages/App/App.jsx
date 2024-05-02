@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import AuthPage from '../AuthPage/AuthPage';
 import OrganizationPage from '../OrganizationPage/OrganizationPage';
+import InitiativesPage from '../InitiativesPage/InitiativesPage';
 import NavBar from '../../components/NavBar/NavBar';
 import { getUser } from '../../utilities/users-service';
 
@@ -17,6 +18,7 @@ export default function App() {
           <Routes>
             <Route path="/organizations" element={<OrganizationPage />} />
             <Route path="/" element={<Navigate to="/organizations" />} />
+            <Route path="/initiatives" element={<InitiativesPage />} />
           </Routes>
         </>
         :
