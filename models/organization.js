@@ -1,29 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const initiativeCategories = [
-  "Education",
-  "Healthcare",
-  "Environmental",
-  "Community Development",
-  "Arts and Culture",
-  "Human Rights",
-  "Disaster Relief",
-  "Animal Welfare",
-  "Technology",
-  "Research and Development",
-  "Youth Programs",
-  "Senior Services",
-  "Veteran Support",
-  "Homelessness",
-  "Food Security",
-  "Mental Health",
-  "Sports and Recreation",
-  "Legal Aid",
-  "Economic Development",
-  "Women's Empowerment"
-];
-
 const initiativeSchema = new Schema({
   description: { type: String, required: true },
   location: {
@@ -36,7 +13,17 @@ const initiativeSchema = new Schema({
   date: { type: Date, required: true },
   category: [{ 
     type: String,
-    enum: initiativeCategories, 
+    enum: [
+      'Education',
+      'Healthcare',
+      'Environmental',
+      'Community Development',
+      'Arts and Culture',
+      'Human Rights',
+      'Disaster Relief',
+      'Animal Welfare',
+      'Youth Programs',
+      'Senior Services'], 
     required: true
   }],
   duration: { type: String, required: true },
@@ -57,7 +44,7 @@ const organizationSchema = new Schema({
     required: true 
   },
   user: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
     unique: true 

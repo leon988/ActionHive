@@ -1,6 +1,4 @@
-const jwt = require('jsonwebtoken');
 const Organization = require('../../models/organization');
-const bcrypt = require('bcrypt');
 require ('dotenv').config
 
 module.exports = {
@@ -39,7 +37,7 @@ async function update(req, res) {
     const organization = await Organization.findOneAndUpdate(
       { user: req.user._id },
       req.body,
-      { new: true, runValidators: true }
+      { new: true }
     );
     if (!organization) {
       throw new Error('Organization not found');

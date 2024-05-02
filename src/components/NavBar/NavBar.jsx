@@ -9,8 +9,8 @@ export default function NavBar({ user, setUser }) {
 
   return (
     <nav>
-      {/* <Link to="/orders">Order History</Link>
-      &nbsp; | &nbsp; */}
+      <Link to="/initiatives/create">Create Initiatives</Link>
+      &nbsp; | &nbsp; 
       <Link to="/initiatives">Initiatives</Link>
       &nbsp; | &nbsp; 
       <Link to="/organizations">Organization</Link>

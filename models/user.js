@@ -18,8 +18,7 @@ const userSchema = new Schema({
     required: true
   }, 
   organization: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Organization',
+    type: Boolean,
     required: false 
   }
 }, {

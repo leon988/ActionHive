@@ -4,6 +4,7 @@ import './App.css';
 import AuthPage from '../AuthPage/AuthPage';
 import OrganizationPage from '../OrganizationPage/OrganizationPage';
 import InitiativesPage from '../InitiativesPage/InitiativesPage';
+import CreateInitiativePage from '../CreateInitiativePage/CreateInitiativePage';
 import NavBar from '../../components/NavBar/NavBar';
 import { getUser } from '../../utilities/users-service';
 
@@ -19,6 +20,7 @@ export default function App() {
             <Route path="/organizations" element={<OrganizationPage />} />
             <Route path="/" element={<Navigate to="/organizations" />} />
             <Route path="/initiatives" element={<InitiativesPage />} />
+            <Route path="/initiatives/create" element={<CreateInitiativePage />} />
           </Routes>
         </>
         :

@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 export default function InitiativesPage() {
     const [initiatives, setInitiatives] = useState([]);
 
+
     useEffect(() => {
         const fetchInitiatives = async () => {
             try {
@@ -13,6 +14,7 @@ export default function InitiativesPage() {
                 console.error('Failed to fetch initiatives:', error);
             }
         };
+
         fetchInitiatives();
     }, []);
 
