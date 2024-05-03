@@ -17,10 +17,15 @@ const userSchema = new Schema({
     type: String,
     required: true
   }, 
+  role: {
+    type: String,
+    enum: ['Volunteer', 'Organization'],
+    required: true
+  },
   organization: {
-    type: Boolean,
-    required: false 
-  }
+    type: Schema.Types.ObjectId,
+    ref: 'Organization'
+  },
 }, {
   timestamps: true,
   toJSON: {

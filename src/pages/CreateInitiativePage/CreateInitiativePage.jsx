@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 export default function CreateInitiativePage() {
     const [formData, setFormData] = useState({
         description: '',
+        location:'',
         date: '',
         category: '',
         duration: '',
@@ -36,6 +37,7 @@ export default function CreateInitiativePage() {
             alert('Initiative created successfully!');
             setFormData({
                 description: '',
+                location:'',
                 date: '',
                 category: '',
                 duration: '',
@@ -53,6 +55,17 @@ export default function CreateInitiativePage() {
                 <form onSubmit={handleSubmit}>
                     <label>Description</label>
                     <input type="text" name="description" value={formData.description} onChange={handleInputChange} required />
+
+                    <label>Location</label>
+                    <input type="text" name="street" placeholder="Street" value={formData.location.street} onChange={handleInputChange} required />
+                    <br></br>
+                    <input type="text" name="city" placeholder="City" value={formData.location.city} onChange={handleInputChange} required />
+                    <br></br>
+                    <input type="text" name="state" placeholder="State" value={formData.location.state} onChange={handleInputChange} required />
+                    <br></br>
+                    <input type="text" name="country" placeholder="Country" value={formData.location.country} onChange={handleInputChange} required />
+                    <br></br>
+                    <input type="text" name="zip" placeholder="Zip" value={formData.location.zip} onChange={handleInputChange} required />
 
                     <label>Date</label>
                     <input type="date" name="date" value={formData.date} onChange={handleInputChange} required />

@@ -8,7 +8,7 @@ const initiativeSchema = new Schema({
     city: String,
     state: String,
     country: String,
-    zip: String
+    zip: Number
   },
   date: { type: Date, required: true },
   category: [{ 

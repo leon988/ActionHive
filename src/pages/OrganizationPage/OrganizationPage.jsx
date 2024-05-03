@@ -1,26 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { getOrganization, updateOrganization, createOrganization } from '../../utilities/organizations-api';
 
-export default function OrganizationPage() {
+export default function OrganizationPage({ user }) {
   const [organization, setOrganization] = useState(null);
   const [editing, setEditing] = useState(false);
   const [formData, setFormData] = useState({ name: '', description: '', category: '' });
-
+  console.log(user)
+  
   useEffect(() => {
     const fetchOrganizationData = async () => {
       try {
-        const response = await fetch('/api/organizations');
-        if (!response.ok) {
-          setOrganization(null);
-          setEditing(true); 
-        } else {
-          const data = await response.json();
-          setOrganization(data);
-          setFormData({
-            name: data.name,
-            description: data.description,
-            category: data.category
-          });
-        }
+        const response = await getOrganization(user._id); 
+        setOrganization(response);
+        setFormData({
+          name: response.name,
+          description: response.description,
+          category: response.category
+        });
       } catch (err) {
         console.error('Failed to fetch organization data:', err);
         setEditing(true);
@@ -40,23 +36,17 @@ export default function OrganizationPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const method = organization ? 'PUT' : 'POST';
-      const endpoint = '/api/organizations' + (organization ? '' : '/create'); 
-      const response = await fetch(endpoint, {
-        method: method,
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      });
-      const updatedData = await response.json();
-      setOrganization(updatedData);
+      if (organization) {
+        await updateOrganization(formData);
+      } else {
+        await createOrganization(formData); 
+      }
       setEditing(false);
     } catch (err) {
       console.error('Error updating organization:', err);
     }
   };
-
+  console.log(organization, editing)
   return (
     <div>
       <h1>Organization Info</h1>
@@ -65,9 +55,15 @@ export default function OrganizationPage() {
           <label>Name:
             <input type="text" name="name" value={formData.name} onChange={handleInputChange} />
           </label>
+
+          <br></br>
+
           <label>Description:
             <textarea name="description" value={formData.description} onChange={handleInputChange} />
           </label>
+
+          <br></br>
+
           <label>Category:
             <select name="category" value={formData.category} onChange={handleInputChange}>
               <option value="Education">Education</option>
@@ -76,6 +72,7 @@ export default function OrganizationPage() {
               <option value="Other">Other</option>
             </select>
           </label>
+          
           <button type="submit">Save Changes</button>
           {organization && <button type="button" onClick={() => setEditing(false)}>Cancel</button>}
         </form>
