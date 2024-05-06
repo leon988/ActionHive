@@ -10,13 +10,17 @@ module.exports = {
 }
 
 async function create(req, res) {
+  console.log(req.body, req.user)
   try {
     const existingOrganization = await Organization.findOne({ user: req.user._id });
     if (existingOrganization) {
       throw new Error('User already has an organization');
     }
+    console.log('user has no organization')
     req.body.user = req.user
+    console.log(req.body)
     const organization = await Organization.create(req.body);
+    console.log(organization)
     res.json(organization);
   } catch (err) {
     res.status(400).json(err);

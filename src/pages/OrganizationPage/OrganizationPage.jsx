@@ -1,29 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import { getOrganization, updateOrganization, createOrganization } from '../../utilities/organizations-api';
+import { getAllOrganizations, updateOrganization, createOrganization } from '../../utilities/organizations-api';
 
-export default function OrganizationPage({ user }) {
+export default function OrganizationsPage({ user }) {
+  const [organizations, setOrganizations] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [formData, setFormData] = useState({ name: '', description: '', category: '' });
   const [organization, setOrganization] = useState(null);
   const [editing, setEditing] = useState(false);
-  const [formData, setFormData] = useState({ name: '', description: '', category: '' });
-  console.log(user)
-  
+
+  console.log(organizations, loading);
+  console.log(user);
+
   useEffect(() => {
-    const fetchOrganizationData = async () => {
+    const fetchOrganizations = async () => {
       try {
-        const response = await getOrganization(user._id); 
-        setOrganization(response);
-        setFormData({
-          name: response.name,
-          description: response.description,
-          category: response.category
-        });
-      } catch (err) {
-        console.error('Failed to fetch organization data:', err);
-        setEditing(true);
+        const organizationsData = await getAllOrganizations();
+        setOrganizations(organizationsData);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching organizations:', error);
       }
     };
-    fetchOrganizationData();
+
+    fetchOrganizations();
   }, []);
+
+  // Filter organizations based on the current user's ID
+  const userOrganization = organizations.filter(org => org.user === user._id);
+  console.log(userOrganization);
+
+  useEffect(() => {
+    if (userOrganization.length > 0) {
+      setOrganization(userOrganization[0]);
+    }
+  }, [userOrganization]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -37,32 +47,68 @@ export default function OrganizationPage({ user }) {
     event.preventDefault();
     try {
       if (organization) {
-        await updateOrganization(formData);
+        await updateOrganization(formData, organization._id); // Pass organization ID
       } else {
-        await createOrganization(formData); 
+        await createOrganization(formData);
       }
       setEditing(false);
-    } catch (err) {
-      console.error('Error updating organization:', err);
+    } catch (error) {
+      console.error('Error creating/updating organization:', error);
     }
   };
-  console.log(organization, editing)
+
+  const handleUpdate = async (event) => {
+    event.preventDefault();
+    try {
+      await updateOrganization(formData, organization._id);
+      setEditing(false);
+    } catch (error) {
+      console.error('Error updating organization:', error);
+    }
+  };
+
   return (
     <div>
-      <h1>Organization Info</h1>
-      {organization || editing ? (
+      <h1>{organization ? 'Organization Info' : 'Create Organization'}</h1>
+      {organization ? (
+        <form onSubmit={handleUpdate}>
+          <label>Name:
+            <input type="text" name="name" value={organization.name} onChange={handleInputChange} />
+          </label>
+
+          <br />
+
+          <label>Description:
+            <textarea name="description" value={organization.description} onChange={handleInputChange} />
+          </label>
+
+          <br />
+
+          <label>Category:
+            <select name="category" value={organization.category} onChange={handleInputChange}>
+              <option value="Education">Education</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Social Services">Social Services</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+
+          <button type="submit">Save Changes</button>
+          {organization && <button type="button" onClick={() => setEditing(false)}>Cancel</button>}
+        </form>
+      ) : (
         <form onSubmit={handleSubmit}>
           <label>Name:
             <input type="text" name="name" value={formData.name} onChange={handleInputChange} />
           </label>
 
-          <br></br>
+          <br />
 
           <label>Description:
             <textarea name="description" value={formData.description} onChange={handleInputChange} />
           </label>
 
-          <br></br>
+          <br />
 
           <label>Category:
             <select name="category" value={formData.category} onChange={handleInputChange}>
@@ -72,12 +118,9 @@ export default function OrganizationPage({ user }) {
               <option value="Other">Other</option>
             </select>
           </label>
-          
-          <button type="submit">Save Changes</button>
-          {organization && <button type="button" onClick={() => setEditing(false)}>Cancel</button>}
+
+          <button type="submit">Create Organization</button>
         </form>
-      ) : (
-        <p>Loading or failed to load data...</p>
       )}
     </div>
   );

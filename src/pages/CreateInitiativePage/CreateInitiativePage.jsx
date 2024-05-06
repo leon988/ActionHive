@@ -1,103 +1,119 @@
 import React, { useState } from 'react';
+import { createInitiative } from '../../utilities/initiatives-api';
 
-export default function CreateInitiativePage() {
-    const [formData, setFormData] = useState({
-        description: '',
-        location:'',
-        date: '',
-        category: '',
-        duration: '',
-        requirements: ''
-    });
-    const [error, setError] = useState('');
+export default function CreateInitiativePage({ organizationId }) {
+  const [formData, setFormData] = useState({
+    name: '',
+    description: '',
+    location: {
+      street: '',
+      city: '',
+      state: '',
+      country: '',
+      zip: ''
+    },
+    date: '',
+    category: '',
+    duration: '',
+    requirements: ''
+  });
 
-    const handleInputChange = (event) => {
-        const { name, value } = event.target;
-        setFormData(prevFormData => ({
-            ...prevFormData,
-            [name]: value
-        }));
-        setError('');
-    };
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: value
+    }));
+  };
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        try {
-            const response = await fetch('/api/initiatives', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Failed to create initiative');
-            }
-            alert('Initiative created successfully!');
-            setFormData({
-                description: '',
-                location:'',
-                date: '',
-                category: '',
-                duration: '',
-                requirements: ''
-            });
-        } catch (error) {
-            console.error('Creating initiative failed:', error);
-            setError('Failed to create initiative - ' + error.message);
-        }
-    };
+  const handleLocationChange = (event) => {
+    const { name, value } = event.target;
+    setFormData(prevState => ({
+      ...prevState,
+      location: {
+        ...prevState.location,
+        [name]: value
+      }
+    }));
+  };
 
-    return (
-        <div>
-            <div className="form-container">
-                <form onSubmit={handleSubmit}>
-                    <label>Description</label>
-                    <input type="text" name="description" value={formData.description} onChange={handleInputChange} required />
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await createInitiative(formData);
+      // Handle success, e.g., redirect or show a success message
+    } catch (error) {
+      console.error('Error creating initiative:', error);
+      // Handle error, e.g., display an error message to the user
+    }
+  };
 
-                    <label>Location</label>
-                    <input type="text" name="street" placeholder="Street" value={formData.location.street} onChange={handleInputChange} required />
-                    <br></br>
-                    <input type="text" name="city" placeholder="City" value={formData.location.city} onChange={handleInputChange} required />
-                    <br></br>
-                    <input type="text" name="state" placeholder="State" value={formData.location.state} onChange={handleInputChange} required />
-                    <br></br>
-                    <input type="text" name="country" placeholder="Country" value={formData.location.country} onChange={handleInputChange} required />
-                    <br></br>
-                    <input type="text" name="zip" placeholder="Zip" value={formData.location.zip} onChange={handleInputChange} required />
+  return (
+    <div>
+      <h2>Create Initiative</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Name:
+          <input type="text" name="name" value={formData.name} onChange={handleInputChange} />
+        </label>
 
-                    <label>Date</label>
-                    <input type="date" name="date" value={formData.date} onChange={handleInputChange} required />
+        <label>
+          Description:
+          <textarea name="description" value={formData.description} onChange={handleInputChange} />
+        </label>
 
-                    <label>Category:
-                      <select name="category" value={formData.category} onChange={handleInputChange} required>
-                        <option value="Education">Education</option>
-                        <option value="Healthcare">Healthcare</option>
-                        <option value="Environmental">Environmental</option>
-                        <option value="Community Development">Community Development</option>
-                        <option value="Arts and Culture">Arts and Culture</option>
-                        <option value="Human Rights">Human Rights</option>
-                        <option value="Disaster Relief">Disaster Relief</option>
-                        <option value="Animal Welfare">Animal Welfare</option>
-                        <option value="Youth Programs">Youth Programs</option>
-                        <option value="Senior Services">Senior Services</option>
-                      </select>
-                    </label>
+        <label>
+          Street:
+          <input type="text" name="street" value={formData.location.street} onChange={handleLocationChange} />
+        </label>
 
-                    <br></br>
+        <label>
+          City:
+          <input type="text" name="city" value={formData.location.city} onChange={handleLocationChange} />
+        </label>
 
-                    <label>Duration</label>
-                    <input type="text" name="duration" value={formData.duration} onChange={handleInputChange} required />
+        <label>
+          State:
+          <input type="text" name="state" value={formData.location.state} onChange={handleLocationChange} />
+        </label>
 
-                    <label>Requirements</label>
-                    <input type="text" name="requirements" value={formData.requirements} onChange={handleInputChange} required />
+        <label>
+          Country:
+          <input type="text" name="country" value={formData.location.country} onChange={handleLocationChange} />
+        </label>
 
-                    <button type="submit">Create Initiative</button>
-                </form>
-            </div>
-            {error && <p className="error-message">{error}</p>}
-        </div>
-    );
+        <label>
+          Zip:
+          <input type="text" name="zip" value={formData.location.zip} onChange={handleLocationChange} />
+        </label>
+
+        <label>
+          Date:
+          <input type="date" name="date" value={formData.date} onChange={handleInputChange} />
+        </label>
+
+        <label>
+          Category:
+          <select name="category" value={formData.category} onChange={handleInputChange}>
+            <option value="">Select a category</option>
+            {['Education', 'Healthcare', 'Environmental', 'Community Development', 'Arts and Culture', 'Human Rights', 'Disaster Relief', 'Animal Welfare', 'Youth Programs', 'Senior Services'].map(cat => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
+          </select>
+        </label>
+
+        <label>
+          Duration:
+          <input type="text" name="duration" value={formData.duration} onChange={handleInputChange} />
+        </label>
+
+        <label>
+          Requirements:
+          <textarea name="requirements" value={formData.requirements} onChange={handleInputChange} />
+        </label>
+
+        <button type="submit">Create</button>
+      </form>
+    </div>
+  );
 }
-
