@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
-import { createInitiative } from '../../utilities/initiatives-api';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { getInitiative, updateInitiative } from '../../utilities/initiatives-api';
 
-export default function CreateInitiativePage({ organizationId }) {
-  console.log(organizationId)
+export default function EditInitiativePage() {
+  const { id } = useParams();
+  const [loading, setLoading] = useState(true);
+
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -16,9 +19,22 @@ export default function CreateInitiativePage({ organizationId }) {
     date: '',
     category: '',
     duration: '',
-    requirements: '',
-    organization: organizationId 
+    requirements: ''
   });
+
+  useEffect(() => {
+    const fetchInitiative = async () => {
+      try {
+        const initiativeData = await getInitiative(id);
+        setFormData(initiativeData[0]);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching initiative:', error);
+      }
+    };
+
+    fetchInitiative();
+  }, [id]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -39,19 +55,23 @@ export default function CreateInitiativePage({ organizationId }) {
     }));
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    try {
-      await createInitiative(formData);
-    } catch (error) {
-      console.error('Error creating initiative:', error);
-    }
-  };
+const handleUpdate = async (event) => {
+  event.preventDefault();
+  try {
+    await updateInitiative(formData, id);
+    // Optionally, navigate back to the initiative detail page after update
+  } catch (error) {
+    console.error('Error updating initiative:', error);
+  }
+};
+
+
+  if (loading) return <p>Loading...</p>;
 
   return (
     <div>
-      <h2>Create Initiative</h2>
-      <form onSubmit={handleSubmit}>
+      <h2>Edit Initiative</h2>
+      <form onSubmit={handleUpdate}>
         <label>
           Name:
           <input type="text" name="name" value={formData.name} onChange={handleInputChange} />
@@ -112,7 +132,7 @@ export default function CreateInitiativePage({ organizationId }) {
           <textarea name="requirements" value={formData.requirements} onChange={handleInputChange} />
         </label>
 
-        <button type="submit">Create</button>
+        <button type="submit">Update</button>
       </form>
     </div>
   );

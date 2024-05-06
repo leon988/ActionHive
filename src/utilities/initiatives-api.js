@@ -10,7 +10,7 @@ export async function getInitiative(id) {
   return sendRequest(`${BASE_URL}/${id}`);
 }
 
-export async function updateInitiative(id, data) {
+export async function updateInitiative(data, id) {
   return sendRequest(`${BASE_URL}/${id}`, 'PUT', data);
 }
 

@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const initiativeSchema = new Schema({
   name: String,
-  description: { type: String, required: true },
+  description: { type: String },
   location: {
     street: String,
     city: String,
@@ -11,7 +11,7 @@ const initiativeSchema = new Schema({
     country: String,
     zip: Number
   },
-  date: { type: Date, required: true },
+  date: { type: Date },
   category: [{ 
     type: String,
     enum: [
@@ -25,10 +25,9 @@ const initiativeSchema = new Schema({
       'Animal Welfare',
       'Youth Programs',
       'Senior Services'], 
-    required: true
   }],
-  duration: { type: String, required: true },
-  requirements: { type: String, required: true },
+  duration: { type: String },
+  requirements: { type: String },
   organization: {
     type: Schema.Types.ObjectId,
     ref: 'Organization',
@@ -54,28 +53,3 @@ const organizationSchema = new Schema({
 }, { timestamps: true });
 
 module.exports = mongoose.model('Organization', organizationSchema);
-
-// NEW ORGANIZATION SCHEMA:
-// TODO: CHECK IT OUT
-// const mongoose = require('mongoose');
-// const Schema = mongoose.Schema;
-
-// const organizationSchema = new Schema({
-//   name: { type: String, required: true },
-//   description: { type: String, required: true },
-//   category: { 
-//     type: String, 
-//     enum: ['Education', 'Healthcare', 'Social Services', 'Other'],
-//     required: true 
-//   },
-//   user: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: 'User',
-//     required: true,
-//     unique: true
-//   }
-// }, { timestamps: true });
-
-// const Organization = mongoose.model('Organization', organizationSchema);
-
-// module.exports = Organization;

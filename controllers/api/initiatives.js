@@ -1,4 +1,3 @@
-const { useReducer } = require("react");
 const Organization = require("../../models/organization");
 require("dotenv").config;
 
@@ -12,15 +11,15 @@ module.exports = {
 
 async function create(req, res) {
   try {
-    const organization = await Organization.findById(req.user.organization);
-    console.log(organization)
+    console.log(req.body)
+    const organization = await Organization.findOne({ user: req.user._id });
+    console.log(req.user._id)
     if (!organization) {
       throw new Error("Organization not found");
     }
     organization.initiatives.push(req.body);
-    console.log(req.body)
     await organization.save();
-    res.status(201).json(organization.initiatives);
+    res.json(organization.initiatives);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -28,7 +27,7 @@ async function create(req, res) {
 
 async function index(req, res) {
   try {
-    const organization = await Organization.findById(req.user.organization);
+    const organization = await Organization.findOne({ user: req.user._id });
     if (!organization) {
       throw new Error("Organization not found");
     }
@@ -40,12 +39,14 @@ async function index(req, res) {
 
 async function show(req, res) {
   try {
-    const organization = await Organization.findById(req.user.organization);
+    const organization = await Organization.find({"initiatives._id": req.params.id}).populate("initiatives");
+    console.log(organization)
     if (!organization) {
       throw new Error("Organization not found");
     }
-    const initiative = organization.initiatives.find(
-      (init) => init._id === req.params.id
+    organization[0].initiatives.forEach(init => console.log(init))
+    const initiative = organization[0].initiatives.filter(
+      (init) => init._id.toString() === req.params.id
     );
     if (!initiative) {
       throw new Error("Initiative not found");
@@ -58,7 +59,7 @@ async function show(req, res) {
 
 async function update(req, res) {
   try {
-    const organization = await Organization.findById(req.user.organization);
+    const organization = await Organization.findOne({ user: req.user._id });
     if (!organization) {
       throw new Error("Organization not found");
     }
@@ -79,7 +80,7 @@ async function update(req, res) {
 
 async function deleteInitiative(req, res) {
   try {
-    const organization = await Organization.findById(req.user.organization);
+    const organization = await Organization.findOne({ user: req.user._id });
     if (!organization) {
       throw new Error("Organization not found");
     }

@@ -27,7 +27,12 @@ export default function NavBar({ user, setUser }) {
             </>
           )}
           {user.role === 'Volunteer' && (
-            <Link to="/initiatives">Initiatives</Link>
+            <>
+              <Link to="/initiatives">Initiatives</Link>
+              &nbsp;|&nbsp;
+              <Link to="/volunteer">Volunteer Info</Link>
+               &nbsp;&nbsp;
+            </>
           )}
           <span>Welcome, {user.name}</span>
           &nbsp;&nbsp;

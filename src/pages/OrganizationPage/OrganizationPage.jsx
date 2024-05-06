@@ -47,7 +47,7 @@ export default function OrganizationsPage({ user }) {
     event.preventDefault();
     try {
       if (organization) {
-        await updateOrganization(formData, organization._id); // Pass organization ID
+        await updateOrganization(formData, organization._id); 
       } else {
         await createOrganization(formData);
       }
