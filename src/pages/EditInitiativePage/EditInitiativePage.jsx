@@ -69,8 +69,10 @@ const handleUpdate = async (event) => {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div>
-      <h2>Edit Initiative</h2>
+    <div className="bg-neutral min-h-screen text-dark">
+      <h2 className="text-3xl font-bold text-primary mb-4">
+        Edit Initiative
+      </h2>
       <form onSubmit={handleUpdate}>
         <label>
           Name:
@@ -131,8 +133,8 @@ const handleUpdate = async (event) => {
           Requirements:
           <textarea name="requirements" value={formData.requirements} onChange={handleInputChange} />
         </label>
-
-        <button type="submit">Update</button>
+        
+        <button type="submit" className="bg-primary text-white py-2 px-4 rounded hover:bg-secondary transition duration-300">Update</button>
       </form>
     </div>
   );

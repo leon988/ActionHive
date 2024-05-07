@@ -8,37 +8,37 @@ export default function NavBar({ user, setUser }) {
   }
 
   return (
-    <nav>
-      <Link to="/">Home</Link>
-      &nbsp; | &nbsp; 
-      <Link to="/about">About</Link>
-      &nbsp; | &nbsp;
-      {user && (
-        <>
-          <Link to="/organizations/index">View Organizations</Link>
-          &nbsp; | &nbsp; 
-          {user.role === 'Organization' && (
+    <nav className="bg-neutral p-4 shadow-md">
+      <div className="container mx-auto flex justify-between items-center">
+        <div>
+          <Link className="text-dark hover:text-primary mx-2" to="/">Home</Link>
+          <Link className="text-dark hover:text-primary mx-2" to="/about">About</Link>
+          {user && (
             <>
-              <Link to="/initiatives/create">Create Initiatives</Link>
-              &nbsp; | &nbsp; 
-              <Link to="/initiatives">Initiatives</Link>
-              &nbsp; | &nbsp;
-              <Link to="/organizations">Organization Info</Link>
+              <Link className="text-dark hover:text-primary mx-2" to="/organizations/index">View Organizations</Link>
+              {user.role === 'Organization' && (
+                <>
+                  <Link className="text-dark hover:text-primary mx-2" to="/initiatives/create">Create Initiatives</Link>
+                  <Link className="text-dark hover:text-primary mx-2" to="/initiatives">Initiatives</Link>
+                  <Link className="text-dark hover:text-primary mx-2" to="/organizations">Organization Info</Link>
+                </>
+              )}
+              {user.role === 'Volunteer' && (
+                <>
+                  <Link className="text-dark hover:text-primary mx-2" to="/initiatives">Initiatives</Link>
+                  <Link className="text-dark hover:text-primary mx-2" to="/volunteer">Volunteer Info</Link>
+                </>
+              )}
             </>
           )}
-          {user.role === 'Volunteer' && (
-            <>
-              <Link to="/initiatives">Initiatives</Link>
-              &nbsp;|&nbsp;
-              <Link to="/volunteer">Volunteer Info</Link>
-               &nbsp;&nbsp;
-            </>
-          )}
-          <span>Welcome, {user.name}</span>
-          &nbsp;&nbsp;
-          <Link to="" onClick={handleLogOut}>Log Out</Link>
-        </>
-      )}
+        </div>
+        {user && (
+          <div>
+            <span className="text-secondary mr-4">Welcome, {user.name}</span>
+            <Link className="bg-primary text-white px-4 py-2 rounded hover:bg-dark" to="" onClick={handleLogOut}>Log Out</Link>
+          </div>
+        )}
+      </div>
     </nav>
   );
 }

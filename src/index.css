@@ -1,9 +1,10 @@
 /* CSS Custom Properties */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   --white: #FFFFFF;
   --tan-1: #FBF9F6;
   --tan-2: #E7E2DD;
@@ -105,18 +106,18 @@ label {
   font-size: 2vmin;
   display: flex;
   align-items: center;
-}
+} */
 
-input {
+/* input {
   padding: 1vmin;
   font-size: 2vmin;
   border: .1vmin solid var(--tan-3);
   border-radius: .5vmin;
   color: var(--text-dark);
   background-image: none !important; /* prevent lastpass */
-  outline: none;
-}
-
+  /* outline: none;
+} */ 
+/* 
 input:focus {
   border-color: var(--orange);
 }
@@ -154,4 +155,4 @@ button:disabled, form:invalid button[type="submit"] {
 button[type="submit"] {
   grid-column: span 2;
   margin: 1vmin 0 0;
-}
+} */

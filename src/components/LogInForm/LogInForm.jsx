@@ -28,17 +28,22 @@ export default function LoginForm({ setUser }) {
   }
 
   return (
-    <div>
-      <div className="form-container">
-        <form autoComplete="off" onSubmit={handleSubmit}>
-          <label>Email</label>
-          <input type="text" name="email" value={credentials.email} onChange={handleChange} required />
-          <label>Password</label>
-          <input type="password" name="password" value={credentials.password} onChange={handleChange} required />
-          <button type="submit">LOG IN</button>
+    <div className="flex justify-center items-center min-h-[40vh] bg-neutral">
+      <div className="form-container w-full max-w-xs p-8 border border-gray-300 rounded-lg shadow-lg">
+        <h1>Log In</h1>
+        <form autoComplete="off" onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block font-semibold text-lg">Email</label>
+            <input type="text" name="email" value={credentials.email} onChange={handleChange} required className="mt-1 w-full p-2 border border-gray-300 rounded" />
+          </div>
+          <div>
+            <label className="block font-semibold text-lg">Password</label>
+            <input type="password" name="password" value={credentials.password} onChange={handleChange} required className="mt-1 w-full p-2 border border-gray-300 rounded" />
+          </div>
+          <button type="submit" className="w-full bg-primary text-white py-2 px-4 rounded hover:bg-secondary transition duration-300">LOG IN</button>
         </form>
+        <p className="error-message text-red-500 text-center mt-4">{error}</p>
       </div>
-      <p className="error-message">&nbsp;{error}</p>
     </div>
   );
 }

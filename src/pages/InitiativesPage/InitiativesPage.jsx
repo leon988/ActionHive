@@ -31,22 +31,30 @@ export default function InitiativesPage() {
   };
 
   return (
-    <div>
-      <h2>Initiatives</h2>
+    <div className="p-8">
+      <h2 className="text-3xl font-bold text-primary mb-4">
+        Initiatives
+      </h2>
       {loading ? (
-        <p>Loading...</p>
+        <p className="text-lg text-gray-500">Loading...</p>
       ) : (
-        <ul>
+        <ul className="space-y-4">
           {initiatives.map(initiative => (
-            <li key={initiative._id}>
-              <h3>{initiative.name}</h3>
-              <p>{initiative.description}</p>
-              <p>Date: {initiative.date}</p>
-              <p>Category: {initiative.category}</p>
-              <Link to={`/initiatives/${initiative._id}`}>
-                <button>View Details</button>
-              </Link>
-              <button onClick={() => handleDelete(initiative._id)}>Delete</button>
+            <li key={initiative._id} className="bg-neutral p-4 rounded-lg shadow-md">
+              <h3 className="text-2xl font-semibold text-dark mb-2">{initiative.name}</h3>
+              <p className="text-gray-800">{initiative.description}</p>
+              <p className="text-gray-600">Date: {initiative.date}</p>
+              <p className="text-gray-600">Category: {initiative.category}</p>
+              <div className="flex justify-center space-x-4 mt-4">
+                <Link to={`/initiatives/${initiative._id}`}>
+                  <button className="bg-primary text-white py-2 px-4 rounded hover:bg-secondary transition duration-300">
+                    View Details
+                  </button>
+                </Link>
+                <button onClick={() => handleDelete(initiative._id)} className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-700 transition duration-300">
+                  Delete
+                </button>
+              </div>
             </li>
           ))}
         </ul>

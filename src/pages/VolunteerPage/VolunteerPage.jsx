@@ -65,8 +65,9 @@ export default function VolunteerPage({ user }) {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div>
-      <h1>{editing ? 'Edit Volunteer Profile' : 'Volunteer Profile'}</h1>
+    <div className="bg-neutral min-h-screen text-dark">
+      <h1 className="text-3xl font-bold text-primary mb-4">
+        {editing ? 'Edit Volunteer Profile' : 'Volunteer Profile'}</h1>
       <form onSubmit={editing ? handleUpdate : handleSubmit}>
         <label>
           Bio:
@@ -83,7 +84,7 @@ export default function VolunteerPage({ user }) {
           <input type="text" name="status" value={formData.status} onChange={handleInputChange} />
         </label>
 
-        <button type="submit">{editing ? 'Save' : 'Create'}</button>
+        <button type="submit"className="bg-primary text-white py-2 px-4 rounded hover:bg-secondary transition duration-300"> {editing ? 'Save' : 'Create'}</button>
       </form>
     </div>
   );
