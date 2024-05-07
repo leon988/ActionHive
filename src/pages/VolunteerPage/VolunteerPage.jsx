@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getAllVolunteers, updateVolunteer, createVolunteer } from '../../utilities/volunteer-api';
 
 export default function VolunteerPage({ user }) {
-  const [volunteers, setVolunteers] = useState(null);
+  const [volunteers, setVolunteers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
     bio: '',
@@ -16,9 +16,9 @@ export default function VolunteerPage({ user }) {
   console.log(user)
 
   useEffect(() => {
-    const fetchVolunteerData = async () => {
+    const fetchVolunteers = async () => {
       try {
-        const volunteerData = await getVolunteer();
+        const volunteerData = await getAllVolunteers();
         setVolunteer(volunteerData);
         setLoading(false);
       } catch (error) {
@@ -26,7 +26,7 @@ export default function VolunteerPage({ user }) {
       }
     };
   
-    fetchVolunteerData();
+    fetchVolunteers();
   }, []); 
   
 
@@ -42,7 +42,7 @@ export default function VolunteerPage({ user }) {
     event.preventDefault();
     try {
       if(volunteer){
-      await createVolunteer(formData, volunteer._id); 
+      await updateVolunteer(formData, volunteer._id); 
       } else {
         await createVolunteer(formData);
       }

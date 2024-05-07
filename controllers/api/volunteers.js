@@ -22,15 +22,17 @@ async function create(req, res) {
   }
 }
 
+
 async function show(req, res) {
   try {
     const volunteer = await Volunteer.findById(req.params.id);
+    console.log(volunteer)
     if (!volunteer) {
       throw new Error('Volunteer not found');
     }
     res.json(volunteer);
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json(err);
   }
 }
 

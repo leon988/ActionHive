@@ -3,7 +3,7 @@ const router = express.Router();
 const volunteersCtrl = require('../../controllers/api/volunteers');
 const ensureLoggedIn = require('../../config/ensureLoggedIn');
 
-// GET /api/organizations - Retrieve all organizations
+// GET /api/organizations - Retrieve all volunteers
 router.get('/', ensureLoggedIn, volunteersCtrl.index);
 
 // GET /api/volunteers/:id - Retrieve the logged-in user's volunteer

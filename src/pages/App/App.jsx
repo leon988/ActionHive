@@ -51,7 +51,6 @@ import VolunteerPage from '../VolunteerPage/VolunteerPage';
               <Route path="/about" element={<AboutPage />} />
               <Route path="/organizations/index" element={<AllOrgPage organizations={organizations} loading={loading}/>} />
               <Route path="/initiatives/:id" element={<DetailInitiativePage />} />
-              <Route path="/initiatives" element={<InitiativesPage />} />
 
               {/* Check if the user is an organization */}
               {user.role === 'Organization' && (
@@ -59,6 +58,7 @@ import VolunteerPage from '../VolunteerPage/VolunteerPage';
                   <Route path="/organizations" element={<OrganizationPage user={user} organizations={organizations} />} />
                   <Route path="/initiatives/create" element={<CreateInitiativePage organizationId={currentOrganizationId} />} />
                   <Route path="/initiatives/:id/edit" element={<EditInitiativePage />} />
+                  <Route path="/initiatives" element={<InitiativesPage />} />
                 </>
               )}
               {/* Check if the user is a volunteer */}
