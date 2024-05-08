@@ -5,13 +5,13 @@ export default function HomePage() {
   return (
     <div className="bg-neutral min-h-screen text-dark">
       <header className="text-center p-8">
-        <h1 className="text-5xl font-bold text-primary mb-6 mt-12">Welcome to our Volunteer Connection Platform!</h1>
+        <h1 className="text-5xl font-bold text-primary mb-6 mt-12">Welcome to Action Hive 🐝</h1>
         <p className="text-dark-grey text-xl mb-8">Find meaningful volunteer opportunities in your community.</p>
         <Link to="/about" className="bg-accent hover:bg-primary text-white font-medium py-2 px-4 rounded-lg transition duration-300">
           Learn More
         </Link>
 
-        <img src="https://imgur.com/gallery/d2C8U7U" alt="Volunteer Work" className="mt-8 max-w-full h-auto"/>
+        {/* <img src="https://imgur.com/gallery/d2C8U7U" alt="Volunteer Work" className="mt-8 max-w-full h-auto"/> */}
       </header>
 
       <section className="py-8 px-4">
