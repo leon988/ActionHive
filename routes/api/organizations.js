@@ -4,7 +4,6 @@ const organizationsCtrl = require('../../controllers/api/organizations');
 const ensureLoggedIn = require('../../config/ensureLoggedIn');
 // All paths start with '/api/organizations'
 
-
 // GET /api/organizations - Retrieve all organizations
 router.get('/', ensureLoggedIn, organizationsCtrl.index);
 
