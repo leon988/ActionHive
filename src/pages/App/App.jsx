@@ -51,7 +51,6 @@ import VolunteerPage from '../VolunteerPage/VolunteerPage';
               <Route path="/about" element={<AboutPage />} />
               <Route path="/organizations/index" element={<AllOrgPage organizations={organizations} loading={loading}/>} />
               <Route path="/initiatives/:id" element={<DetailInitiativePage />} />
-
               {/* Check if the user is an organization */}
               {user.role === 'Organization' && (
                 <>
