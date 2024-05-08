@@ -76,19 +76,19 @@ export default function OrganizationsPage({ user }) {
         <form onSubmit={handleUpdate} className="space-y-4">
           <div className="flex flex-col">
             <label className="font-semibold">Name:
-              <input type="text" name="name" value={organization.name} onChange={handleInputChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
+              <input type="text" name="name" value={formData.name} onChange={handleInputChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
             </label>
           </div>
   
           <div className="flex flex-col">
             <label className="font-semibold">Description:
-              <textarea name="description" value={organization.description} onChange={handleInputChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
+              <textarea name="description" value={formData.description} onChange={handleInputChange} className="mt-1 p-2 border border-gray-300 rounded w-full" />
             </label>
           </div>
   
           <div className="flex flex-col">
             <label className="font-semibold">Category:
-              <select name="category" value={organization.category} onChange={handleInputChange} className="mt-1 p-2 border border-gray-300 rounded w-full">
+              <select name="category" value={formData.category} onChange={handleInputChange} className="mt-1 p-2 border border-gray-300 rounded w-full">
                 <option value="Education">Education</option>
                 <option value="Healthcare">Healthcare</option>
                 <option value="Social Services">Social Services</option>

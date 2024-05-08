@@ -30,7 +30,7 @@ export default function LoginForm({ setUser }) {
   return (
     <div className="flex justify-center items-center min-h-[40vh] bg-neutral">
       <div className="form-container w-full max-w-xs p-8 border border-gray-300 rounded-lg shadow-lg">
-        <h1>Log In</h1>
+        <h1 className="text-xl font-bold mb-4">Log In</h1>
         <form autoComplete="off" onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block font-semibold text-lg">Email</label>
