@@ -51,7 +51,7 @@ Action Hive is built with the powerful MERN stack—MongoDB, Express, React, and
 <img src="src/img/Wireframe.png" alt="Action Hive Wireframe" height="auto" width="320">
 
 ### Deployed
-<img src="main_app/static/images/pgdeployed.png" alt="Action Hive" height="auto" width="320">
+<img src="src/img/App.png" alt="Action Hive" height="auto" width="320">
 
 
 🔧 Getting Started 
