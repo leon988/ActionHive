@@ -44,10 +44,10 @@ Action Hive is built with the powerful MERN stack—MongoDB, Express, React, and
 
 📸 Screenshots
 ==============
-### Wireframe
+### ERD
 <img src="src/img/ERD.png" alt="Action Hive Wireframe" height="auto" width="320">
 
-### ERD
+### Wireframe
 <img src="src/img/Wireframe.png" alt="Action Hive ERD" height="auto" width="320">
 
 ### Deployed
